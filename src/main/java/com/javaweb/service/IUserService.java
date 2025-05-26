@@ -13,6 +13,9 @@ import java.util.Map;
 public interface IUserService {
     UserDTO findOneByUserNameAndStatus(String name, int status);
     List<UserDTO> getUsers(String searchValue, Pageable pageable);
+
+    Map<Long, String> getStaffs();
+
     int getTotalItems(String searchValue);
     UserDTO findOneByUserName(String userName);
     UserDTO findUserById(long id);
