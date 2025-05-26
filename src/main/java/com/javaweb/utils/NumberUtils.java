@@ -11,4 +11,8 @@ public class NumberUtils {
 		}
 		return true;
 	}
+	public static boolean checkNumber(Long number)
+	{
+		return number != null && !number.toString().isEmpty();
+	}
 }
