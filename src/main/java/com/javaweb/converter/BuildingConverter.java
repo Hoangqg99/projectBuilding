@@ -33,8 +33,8 @@ public class BuildingConverter {
         Map<String, String> districts = District.type();
 
         String districtName = "";
-        if (buildingEntity.getDistrictid() != null && buildingEntity.getDistrictid() != "") {
-            districtName = districts.get(buildingEntity.getDistrictid());
+        if (buildingEntity.getDistrict() != null && buildingEntity.getDistrict() != "") {
+            districtName = districts.get(buildingEntity.getDistrict());
         }
 
         if (districtName != null && districtName != "") {

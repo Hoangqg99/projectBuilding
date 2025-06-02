@@ -1,6 +1,6 @@
 package com.javaweb.model.dto;
 
-public class CustomerDTO extends AbstractDTO{
+public class CustomerDTO extends AbstractDTO {
     private String name;
     private String managementStaff;
     private String customerPhone;

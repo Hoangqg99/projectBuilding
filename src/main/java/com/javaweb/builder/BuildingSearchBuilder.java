@@ -8,8 +8,7 @@ public class BuildingSearchBuilder {
     private Long floorArea;
     private String ward;
     private String street;
-    // private String district;
-    private String districtid;
+    private String district;
     private Long numberOfBasement;
     private List<String> typeCode = new ArrayList<>();
     private String managerName;
@@ -27,8 +26,7 @@ public class BuildingSearchBuilder {
         this.floorArea = builder.floorArea;
         this.ward = builder.ward;
         this.street = builder.street;
-        // this.district = builder.district; // XÓA DÒNG NÀY
-        this.districtid = builder.districtid; // SỬ DỤNG ĐÚNG districtid
+        this.district = builder.district;
         this.numberOfBasement = builder.numberOfBasement;
         this.typeCode = builder.typeCode;
         this.managerName = builder.managerName;
@@ -66,9 +64,9 @@ public class BuildingSearchBuilder {
         return street;
     }
 
-    // public String getDistrict() {
-    // return district;
-    // }
+    public String getDistrict() {
+        return district;
+    }
 
     public Long getNumberOfBasement() {
         return numberOfBasement;
@@ -106,17 +104,15 @@ public class BuildingSearchBuilder {
         return staffId;
     }
 
-    public String getDistrictid() {
-        return districtid;
-    }
+    // Remove getDistrictid() as getDistrict() is now used
 
     public static class Builder {
         private String name;
         private Long floorArea;
         private String ward;
         private String street;
-        // private String district; // XÓA DÒNG NÀY
-        private String districtid;
+        private String district;
+        // private String districtid;
         private Long numberOfBasement;
         private List<String> typeCode = new ArrayList<>();
         private String managerName;
@@ -216,8 +212,8 @@ public class BuildingSearchBuilder {
 
         }
 
-        public Builder setDistrictid(String districtid) {
-            this.districtid = districtid;
+        public Builder setDistrict(String district) {
+            this.district = district;
             return this;
         }
 

@@ -22,33 +22,37 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller(value="buildingControllerOfAdmin")
+@Controller(value = "buildingControllerOfAdmin")
 public class BuildingController {
     @Autowired
-    private IUserService userService ;
+    private IUserService userService;
     @Autowired
     private BuildingService buildingService;
 
     @RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)
-    public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request)
-    {
+    public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest,
+            HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
         mav.addObject("modelSearch", buildingSearchRequest);
         mav.addObject("listStaffs", userService.getStaffs());
         mav.addObject("districts", District.type());
         mav.addObject("typeCodes", TypeCode.type());
 
-        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF"))
-        {
-            Long staffId = SecurityUtils.getPrincipal().getId();
-            buildingSearchRequest.setStaffId(staffId);
-            mav.addObject("buildingList", buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems())));
-        }
-        else mav.addObject("buildingList", buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems())));
+        // if (SecurityUtils.getAuthorities().contains("ROLE_STAFF")) {
+        // Long staffId = SecurityUtils.getPrincipal().getId();
+        // buildingSearchRequest.setStaffId(staffId);
+        // mav.addObject("buildingList", buildingService.findAll(buildingSearchRequest,
+        // PageRequest.of(buildingSearchRequest.getPage() - 1,
+        // buildingSearchRequest.getMaxPageItems())));
+        // } else
+        // mav.addObject("buildingList", buildingService.findAll(buildingSearchRequest,
+        // PageRequest.of(buildingSearchRequest.getPage() - 1,
+        // buildingSearchRequest.getMaxPageItems())));
 
         BuildingSearchResponse model = new BuildingSearchResponse();
         DisplayTagUtils.of(request, model);
-        List<BuildingSearchResponse> res = buildingService.findAll(buildingSearchRequest, PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
+        List<BuildingSearchResponse> res = buildingService.findAll(buildingSearchRequest,
+                PageRequest.of(buildingSearchRequest.getPage() - 1, buildingSearchRequest.getMaxPageItems()));
         model.setListResult(res);
         model.setTotalItems(buildingService.countTotalItem(res));
         mav.addObject("buildingList", model);
@@ -56,8 +60,8 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/admin/building-edit", method = RequestMethod.GET)
-    public ModelAndView buildingEdit(@ModelAttribute("buildingEdit") BuildingDTO buildingDTO, HttpServletRequest request)
-    {
+    public ModelAndView buildingEdit(@ModelAttribute("buildingEdit") BuildingDTO buildingDTO,
+            HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
         mav.addObject("districts", District.type());
         mav.addObject("typeCodes", TypeCode.type());
@@ -65,8 +69,7 @@ public class BuildingController {
     }
 
     @RequestMapping(value = "/admin/building-edit-{id}", method = RequestMethod.GET)
-    public ModelAndView buildingEdit(@PathVariable("id") Long id, HttpServletRequest request)
-    {
+    public ModelAndView buildingEdit(@PathVariable("id") Long id, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/edit");
         BuildingDTO buildingDTO = buildingService.findById(id);
         mav.addObject("buildingEdit", buildingDTO);

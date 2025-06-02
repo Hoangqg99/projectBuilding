@@ -14,12 +14,10 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
 public abstract class RoleRepositoryImpl implements RoleRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
-
 
 	@Override
 	public RoleEntity findOneByCode(String code) {

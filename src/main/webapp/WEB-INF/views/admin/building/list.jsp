@@ -3,8 +3,6 @@
 <%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <c:url var="buildingListURL" value="/admin/building-list"/>
 <c:url var="buildingAPI" value="/api/building"></c:url>
-
-
 <html>
 
 <head>
@@ -230,7 +228,7 @@
                                 </button>
                             </a>
 
-<%--                            <a href="<c:url value = '/admin/building-delete'/>">--%>
+<%--                          <a href="<c:url value = '/admin/building-delete'/>"--%>
                                 <button class="btn btn-danger" title="Xóa tòa nhà" id="btnDeleteCustomers">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          class="bi bi-building-dash" viewBox="0 0 16 16">
@@ -242,7 +240,7 @@
                                                 d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
                                     </svg>
                                 </button>
-<%--                            </a>--%>
+                            </a>
                         </div>
                     </security:authorize>
                 </div>
@@ -277,8 +275,7 @@
                                 </display:column>
                                 <display:column headerClass="text-left" property="name" title="Tên tòa nhà"/>
                                 <display:column headerClass="text-left" property="address" title="Địa chỉ"/>
-                                <display:column headerClass="text-left" property="numberOfBasement"
-                                                title="Số tầng hầm"/>
+                                <display:column headerClass="text-left" property="numberOfBasement" title="Số tầng hầm"/>
                                 <display:column headerClass="text-left" property="managerName" title="Tên quản lí"/>
                                 <display:column headerClass="text-left" property="managerPhone" title="SĐT quản lí"/>
                                 <display:column headerClass="text-left" property="floorArea" title="D.tích sàn"/>
@@ -288,23 +285,25 @@
 
 
                                 <display:column headerClass="col-actions" title="Thao tác">
-                                    <security:authorize access="hasRole('MANAGER')">
+                                    <!-- <security:authorize access="hasRole('MANAGER')"> -->
                                         <a title="Giao tòa nhà" class="btn btn-xs btn-success"
                                            onclick="assignmentBuilding('${tableList.id}');">
                                             <i class="ace-icon glyphicon glyphicon-list"></i>
                                         </a>
-                                    </security:authorize>
+                                    <!-- </security:authorize> -->
 
                                     <a class="btn btn-xs btn-info" title="Sửa tòa nhà"
                                        href='<c:url value="/admin/building-edit-${tableList.id}"/>'>
                                         <i class="ace-icon fa fa-pencil bigger-120"></i>
                                     </a>
+
                                     <security:authorize access="hasRole('MANAGER')">
                                         <a class="btn btn-xs btn-danger" title="Xóa tòa nhà"
                                            onclick="deleteBuilding('${tableList.id}')">
                                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                         </a>
                                     </security:authorize>
+
                                 </display:column>
                             </display:table>
                         </form:form>
@@ -316,28 +315,25 @@
         </div><!-- /.page-content -->
     </div>
 </div><!-- /.main-container -->
+
 <div class="modal fade" id="assignmentBuildingModal" role="dialog">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close" data-dismiss="modal">×</button>
                 <h4 class="modal-title">Danh sách nhân viên</h4>
             </div>
             <div class="modal-body">
-                <table style="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover"
-                       id="staffList">
+                <table style="margin: 3em 0 1.5em;" class="table table-striped table-bordered table-hover" id="staffList">
                     <thead>
                     <tr>
-                        <th class="center">
-                            Chọn
-                        </th>
+                        <th class="center">Chọn</th>
                         <th>Tên nhân viên</th>
                     </tr>
                     </thead>
-
                     <tbody>
+                    <!-- Staff list will be populated dynamically -->
+
 
                     </tbody>
                 </table>
@@ -345,12 +341,36 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" id="btnassignmentBuilding">Giao tòa nhà</button>
-                <button type="button" class="btn btn-default" id="">Đóng</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
             </div>
         </div>
-
     </div>
 </div>
+<script src="assets/js/jquery.2.1.1.min.js"></script>
+<!-- <script src="assets/js/jquery.1.11.1.min.js"></script> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
+</script>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/excanvas.min.js"></script>
+<script src="assets/js/jquery-ui.custom.min.js"></script>
+<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="assets/js/jquery.easypiechart.min.js"></script>
+<script src="assets/js/jquery.sparkline.min.js"></script>
+<script src="assets/js/jquery.flot.min.js"></script>
+<script src="assets/js/jquery.flot.pie.min.js"></script>
+<script src="assets/js/jquery.flot.resize.min.js"></script>
+
+<!-- ace scripts -->
+<script src="assets/js/ace-elements.min.js"></script>
+<script src="assets/js/ace.min.js"></script>
+
 <script>
 
     function assignmentBuilding(buildingId) {
@@ -359,13 +379,13 @@
         $('#buildingId').val(buildingId);
     }
 
-    $('#btnDeleteCustomers').click(function (e) {
-        var customerIds = [];
-        $('input[name="checkList"]:checked').each(function () {
-            customerIds.push($(this).val());
-        });
-        deleteBuildings(customerIds);
-    })
+    // $('#btnDeleteCustomers').click(function (e) {
+    //     var customerIds = [];
+    //     $('input[name="checkList"]:checked').each(function () {
+    //         customerIds.push($(this).val());
+    //     });
+    //     deleteBuildings(customerIds);
+    // })
 
     function loadStaff(buildingId) {
         $.ajax({
@@ -379,8 +399,6 @@
                     row += '<td class="text-center"><input type="checkbox" value=' + item.staffId + ' id="checkbox_' + item.staffId + '" class = "check-box-element"' + item.checked + '/></td>';
                     row += '<td class="text-center">' + item.fullName + '</td>';
                     row += '</tr>';
-
-
                 });
                 $('#staffList tbody').html(row);
                 console.info("Success");
@@ -401,6 +419,7 @@
         var staffs = $('#staffList').find('tbody input[type = checkbox]:checked').map(function () {
             return $(this).val();
         }).get();
+        //giao
         data['staffs'] = staffs;
         if (data['staffs'] != '') {
             assingment(data);
@@ -442,11 +461,11 @@
 
     $('#btnDeleteBuilding').click(function (e) {
         e.preventDefault();
-        var data = {};
-        var buildingIds = $('#buildingList').find('tbody input[type = checkbox]:checked').map(function () {
+        var buildingIds = $('#tableList').find('tbody input[type = checkbox]:checked').map(function () {
             return $(this).val();
         }).get();
-        deleteBuildings(buildingIds);
+            deleteBuilding(buildingIds);
+            console.log(buildingIds);
     })
 
     function deleteBuildings(data) {
@@ -456,44 +475,57 @@
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "JSON",
-            success: function (respond) {
+            success: function (response) {
                 console.log("Success");
                 window.location.href = "<c:url value='/admin/building-list?message=success'/>";
             },
 
-            error: function (respond) {
+            error: function (response) {
                 console.log("failed");
-                console.log(respond);
+                window.location.href = "<c:url value='/admin/building-list?message=error'/>";
+                console.log(response);
             }
 
         })
     }
+
+    // function deleteBuilding(id) {
+    //     var buildingId = [id];
+    //     deleteBuildings(buildingId);
+    // }
+
+    // $('#btnDeleteBuilding').click(function (e) {
+    //     e.preventDefault();
+    //     var data = {};
+    //     var buildingIds = $('#buildingList').find('tbody input[type = checkbox]:checked').map(function () {
+    //         return $(this).val();
+    //     }).get();
+    //     deleteBuildings(buildingIds);
+    // })
+
+    // function deleteBuildings(data) {
+    //     $.ajax({
+    //         type: "DELETE",
+    //         url: "${buildingAPI}/" + data,
+    //         data: JSON.stringify(data),
+    //         contentType: "application/json",
+    //         dataType: "JSON",
+    //         success: function (respond) {
+    //             console.log("Success");
+    //             window.location.href = "<c:url value='/admin/building-list?message=success'/>";
+    //         },
+
+    //         error: function (respond) {
+    //             console.log("failed");
+    //             console.log(respond);
+    //         }
+
+    //     })
+    // }
+
+
 </script>
 
-<script src="assets/js/jquery.2.1.1.min.js"></script>
-<script src="assets/js/jquery.1.11.1.min.js"></script>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
-</script>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
-</script>
-<script type="text/javascript">
-    if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-</script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/excanvas.min.js"></script>
-<script src="assets/js/jquery-ui.custom.min.js"></script>
-<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-<script src="assets/js/jquery.easypiechart.min.js"></script>
-<script src="assets/js/jquery.sparkline.min.js"></script>
-<script src="assets/js/jquery.flot.min.js"></script>
-<script src="assets/js/jquery.flot.pie.min.js"></script>
-<script src="assets/js/jquery.flot.resize.min.js"></script>
-
-<!-- ace scripts -->
-<script src="assets/js/ace-elements.min.js"></script>
-<script src="assets/js/ace.min.js"></script>
 </body>
 </html>
 </body>

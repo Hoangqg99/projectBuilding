@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BuildingDTO extends AbstractDTO{
+public class BuildingDTO extends AbstractDTO {
     private Long id;
     private String name;
     private Long floorArea;

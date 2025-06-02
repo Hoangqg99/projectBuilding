@@ -21,8 +21,8 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "ward")
     private String ward;
 
-    @Column(name = "districtid")
-    private String districtid;
+    @Column(name = "district")
+    private String district;
 
     @Column(name = "structure")
     private String structure;
@@ -60,8 +60,6 @@ public class BuildingEntity extends BaseEntity {
     @Column(name = "managerphone")
     private String managerPhone;
 
-    @Column(name = "avatar")
-    private String image;
 
     @OneToMany(mappedBy = "buildingId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RentAreaEntity> rentAreaEntities = new ArrayList<>();
@@ -207,13 +205,6 @@ public class BuildingEntity extends BaseEntity {
         this.rentAreaEntities = rentAreaEntities;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public List<UserEntity> getUserEntities() {
         return userEntities;
@@ -223,11 +214,11 @@ public class BuildingEntity extends BaseEntity {
         this.userEntities = userEntities;
     }
 
-    public String getDistrictid() {
-        return districtid;
+    public String getDistrict() {
+        return district;
     }
 
-    public void setDistrictid(String districtid) {
-        this.districtid = districtid;
+    public void setDistrict(String district) {
+        this.district = district;
     }
 }

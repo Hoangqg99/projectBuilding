@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/common/taglib.jsp" %>
+<%@ taglib prefix="display" uri="http://displaytag.sf.net" %>
 <c:url var="buildingAPI" value="/api/building"></c:url>
-
 <html>
 <head>
     <!-- bootstrap & fontawesome -->
@@ -259,19 +259,19 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label class="col-sm-3 no-padding-right">Hình đại diện</label>
                                     <input class="col-sm-3 no-padding-right" type="file" id="uploadImage"/>
                                     <div class="col-sm-9">
-                                        <c:if test="${not empty buildingEdit.image}">
-                                            <c:set var="imagePath" value="/repository${buildingEdit.image}"/>
-                                            <img src="${imagePath}" id="viewImage" alt="" width="300px" height="300px" style="margin-top: 50px">
-                                        </c:if>
-                                        <c:if test="${empty buildingEdit.image}">
-                                            <img src="${pageContext.request.contextPath}/admin/imagey" alt="" id="viewImage" width="300px" height="300px">
-                                        </c:if>
+<%--                                        <c:if test="${not empty buildingEdit.image}">--%>
+<%--                                            <c:set var="imagePath" value="/repository${buildingEdit.image}"/>--%>
+<%--                                            <img src="${imagePath}" id="viewImage" alt="" width="300px" height="300px" style="margin-top: 50px">--%>
+<%--                                        </c:if>--%>
+<%--                                        <c:if test="${empty buildingEdit.image}">--%>
+<%--                                            <img src="${pageContext.request.contextPath}/admin/imagey" alt="" id="viewImage" width="300px" height="300px">--%>
+<%--                                        </c:if>--%>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="form-group">
                                     <label class="col-xs-3"></label>
@@ -300,20 +300,33 @@
         </div>
     </div><!-- /.main-content -->
 </div><!-- /.main-container -->
+
+<script src="assets/js/jquery.2.1.1.min.js"></script>
+<!-- <script src="assets/js/jquery.1.11.1.min.js"></script> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
+</script>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
+</script>
+<script type="text/javascript">
+    if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/excanvas.min.js"></script>
+<script src="assets/js/jquery-ui.custom.min.js"></script>
+<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
+<script src="assets/js/jquery.easypiechart.min.js"></script>
+<script src="assets/js/jquery.sparkline.min.js"></script>
+<script src="assets/js/jquery.flot.min.js"></script>
+<script src="assets/js/jquery.flot.pie.min.js"></script>
+<script src="assets/js/jquery.flot.resize.min.js"></script>
+
+<!-- ace scripts -->
+<script src="assets/js/ace-elements.min.js"></script>
+<script src="assets/js/ace.min.js"></script>
+
 <script>
-
-    var imageBase64 = '';
-    var imageName = '';
-
-    function openImage(input, imageView) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#' +imageView).attr('src', reader.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 
     $('#btnAddOrUpdateBuilding').click(function () {
         var data = {};
@@ -328,14 +341,8 @@
             else {
                 typeCode.push(v.value);
             }
-
-            if ('' !== imageBase64) {
-                data['imageBase64'] = imageBase64;
-                data['imageName'] = imageName;
-            }
         });
         data['typeCode'] = typeCode;
-        $('#loading_image').show();
         if(typeCode !== '')
         {
             addOrUpdateBuilding(data);
@@ -345,17 +352,6 @@
         {
             window.location.href="<c:url value = '/admin/building-list?typeCode=require'/>";
         }
-    });
-
-    $('#uploadImage').change(function (event) {
-        var reader = new FileReader();
-        var file = $(this)[0].files[0];
-        reader.onload = function(e){
-            imageBase64 = e.target.result;
-            imageName = file.name; // ten hinh khong dau, khoang cach. Dat theo format sau: a-b-c
-        };
-        reader.readAsDataURL(file);
-        openImage(this, "viewImage");
     });
 
 
@@ -401,29 +397,107 @@
         console.log("ok");
     })
 </script>
-<script src="assets/js/jquery.2.1.1.min.js"></script>
-<script src="assets/js/jquery.1.11.1.min.js"></script>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery.min.js'>"+"<"+"/script>");
-</script>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='assets/js/jquery1x.min.js'>"+"<"+"/script>");
-</script>
-<script type="text/javascript">
-    if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
-</script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/excanvas.min.js"></script>
-<script src="assets/js/jquery-ui.custom.min.js"></script>
-<script src="assets/js/jquery.ui.touch-punch.min.js"></script>
-<script src="assets/js/jquery.easypiechart.min.js"></script>
-<script src="assets/js/jquery.sparkline.min.js"></script>
-<script src="assets/js/jquery.flot.min.js"></script>
-<script src="assets/js/jquery.flot.pie.min.js"></script>
-<script src="assets/js/jquery.flot.resize.min.js"></script>
 
-<!-- ace scripts -->
-<script src="assets/js/ace-elements.min.js"></script>
-<script src="assets/js/ace.min.js"></script>
+
+
+
+<%--<script>--%>
+
+<%--    // var imageBase64 = '';--%>
+<%--    // var imageName = '';--%>
+
+<%--    // function openImage(input, imageView) {--%>
+<%--    //     if (input.files && input.files[0]) {--%>
+<%--    //         var reader = new FileReader();--%>
+<%--    //         reader.onload = function (e) {--%>
+<%--    //             $('#' +imageView).attr('src', reader.result);--%>
+<%--    //         }--%>
+<%--    //         reader.readAsDataURL(input.files[0]);--%>
+<%--    //     }--%>
+<%--    // }--%>
+
+<%--    $('#btnAddOrUpdateBuilding').click(function () {--%>
+<%--        var data = {};--%>
+<%--        var typeCode = [];--%>
+
+<%--        var formData = $('#listForm').serializeArray();--%>
+<%--        $.each(formData, function (i, v) {--%>
+<%--            if (v.name !== 'typeCode') {--%>
+<%--                data["" + v.name + ""] = v.value;--%>
+<%--            } else {--%>
+<%--                typeCode.push(v.value);--%>
+<%--            }--%>
+<%--        });--%>
+<%--        data['typeCode'] = typeCode;--%>
+
+<%--        if(typeCode.length > 0) {--%>
+<%--            addOrUpdateBuilding(data);--%>
+<%--        } else {--%>
+<%--            alert('Vui lòng chọn ít nhất một loại tòa nhà');--%>
+<%--            return;--%>
+<%--        }--%>
+<%--    });--%>
+
+<%--    function addOrUpdateBuilding(data) {--%>
+<%--        $('#loading_image').show();--%>
+<%--        $.ajax({--%>
+<%--            type: "POST",--%>
+<%--            url: "${buildingAPI}",--%>
+<%--            data: JSON.stringify(data),--%>
+<%--            contentType: "application/json",--%>
+<%--            dataType: "JSON",--%>
+<%--            success: function (response) {--%>
+<%--                // $('#loading_image').hide();--%>
+<%--                if(response.id) {--%>
+<%--                    alert('Thao tác thành công!');--%>
+<%--                    window.location.href = '<c:url value="/admin/building-list"/>';--%>
+<%--                } else {--%>
+<%--                    alert('Có lỗi xảy ra!');--%>
+<%--                }--%>
+<%--            },--%>
+<%--            error: function (response) {--%>
+<%--                // $('#loading_image').hide();--%>
+<%--                console.log("Error:", response);--%>
+<%--                alert('Có lỗi xảy ra: ' + (response.responseJSON?.message || 'Unknown error'));--%>
+<%--            }--%>
+<%--        });--%>
+<%--    }--%>
+
+<%--    // $('#uploadImage').change(function (event) {--%>
+<%--    //     var reader = new FileReader();--%>
+<%--    //     var file = $(this)[0].files[0];--%>
+<%--    //     reader.onload = function(e){--%>
+<%--    //         imageBase64 = e.target.result;--%>
+<%--    //         imageName = file.name; // ten hinh khong dau, khoang cach. Dat theo format sau: a-b-c--%>
+<%--    //     };--%>
+<%--    //     reader.readAsDataURL(file);--%>
+<%--    //     openImage(this, "viewImage");--%>
+<%--    // });--%>
+
+
+
+
+
+<%--    $('#btnCancel').click(function () {--%>
+<%--        window.location.href="<c:url value = '/admin/building-list'/>";--%>
+<%--    });--%>
+
+<%--    function assignmentBuilding(buildingId) {--%>
+<%--        $('#assignmentBuildingModal').modal();--%>
+<%--        $('buildingId').val();--%>
+<%--    }--%>
+
+<%--    $('#btnassignmentBuilding').click(function (e) {--%>
+<%--        e.preventDefault();--%>
+<%--        var data = {};--%>
+<%--        data['buildingId'] = $('buildingId').val();--%>
+<%--        var staffs = $('#staffList').find('tbody input[type = checkbox]:checked').map(function () {--%>
+<%--            return $(this).val();--%>
+<%--        }).get();--%>
+<%--        data['staffs'] = staffs;--%>
+<%--        console.log("ok");--%>
+<%--    })--%>
+<%--</script>--%>
+
 </body>
 </html>
